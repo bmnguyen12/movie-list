@@ -34,13 +34,6 @@ export default class App extends Component {
     return (
       <div>
         <h1>Movie List</h1>
-        {/* <form>
-          <label>
-            Add movie title here
-            <input type="text" value={value} onChange={this.onChange}></input>
-            <input type="submit" value="Add"></input>
-          </label>
-        </form> */}
         <form onSubmit={this.onSearch}>
           <label>
             Search
