@@ -2,66 +2,54 @@
 import React, { Component } from 'react'
 
 export default class App extends Component {
-  constructor(){
-    super()
+  constructor(props){
+    super(props)
     this.state = {
-      movies: [],
-      value: '',
-      search: false,
-      addMovie: '',
-      searchMovies: []
+      movies: [
+        {title: 'Mean Girls'},
+        {title: 'Hackers'},
+        {title: 'The Grey'},
+        {title: 'Sunshine'},
+        {title: 'Ex Machina'}
+      ],
+      search: ''
     }
     // don't forget to bind the methods
+    // createRef takes the input and creates a reference to be used
+    this.videoSearch = React.createRef();
     this.onSearch = this.onSearch.bind(this);
-    this.onChange = this.onChange.bind(this);
-  }
-
-  onAdd (e) {
-    this.setState({
-      addMovie: e.target.value
-    })
   }
 
   onSearch (e) {
-    this.setState({
-      search: true
-    })
-    // NEVER FORGET preventDefault() to prevent refreshing
     e.preventDefault();
-  }
-
-  onChange (e) {
+    let { name, value } = this.videoSearch.current;
     this.setState({
-      value: e.target.value
-    })
+      [name]: value
+    });
   }
 
   render() {
-    const { movies, value, search } = this.state;
+    const { movies, search } = this.state;
     return (
       <div>
         <h1>Movie List</h1>
-        <form onSubmit={this.onAdd}>
+        {/* <form>
           <label>
             Add movie title here
             <input type="text" value={value} onChange={this.onChange}></input>
             <input type="submit" value="Add"></input>
           </label>
-        </form>
+        </form> */}
         <form onSubmit={this.onSearch}>
           <label>
             Search
-            <input type="text" value={value} onChange={this.onChange} ></input>
+            <input type="text" name="search" ref={this.videoSearch} ></input>
             <input type="submit" value="Go!"></input>
           </label>
         </form>
         <ul>
-          {search === true && movies.map((movie, i) => {
-            if (value === '') {
-              return <li key={i}>{ movie.title }</li>
-            } else if (movie.title.includes(value)) {
-              return <li key={i}>{ movie.title }</li>
-            }
+          {movies.map((movie, i) => {
+            return <li key={i}>{ movie.title }</li>
           })}
         </ul>
       </div>
